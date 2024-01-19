@@ -15,46 +15,20 @@ interface NavItemsProps {
 
 export const NavItems: React.FC<NavItemsProps> = ({ activeItem, isMobile }) => {
     return (
-        <>
-            <div className="hidden 800px:flex">
-                {navItemsData.map((nav, index) => (
-                    <Link href={nav.url} key={nav.url} passHref>
-                        <span
-                            className={`${
-                                activeItem === index
-                                    ? "dark:text-[#37a39a] text-[crimson]"
-                                    : "dark:text-white text-black"
-                            } text-[18px] px-6  font-Poppins  font-normal`}
-                        >
-                            {nav.name}
-                        </span>
-                    </Link>
-                ))}
-            </div>
-            {isMobile && (
-                <div className="800px:hidden mt-5">
-                    <div className="w-full text-center py-6">
-                        <Link href="/" passHref>
-                            <span className="text-[25px] font-Poppins font-medium text-black dark:text-white ">
-                                ELearning
-                            </span>
-                        </Link>
-                    </div>
-                    {navItemsData.map((nav, index) => (
-                        <Link href={nav.url} key={nav.url} passHref>
-                            <span
-                                className={`${
-                                    activeItem === index
-                                        ? "dark:text-[#37a39a] text-[crimson]"
-                                        : "dark:text-white text-black"
-                                } block py-5  text-[18px] px-6 font-Poppins font-normal`}
-                            >
-                                {nav.name}
-                            </span>
-                        </Link>
-                    ))}
-                </div>
-            )}
-        </>
+        <div className="hidden md:flex">
+            {navItemsData.map((nav, index) => (
+                <Link href={nav.url} key={nav.url} passHref>
+                    <span
+                        className={`${
+                            activeItem === index
+                                ? "text-yellow-100 dark:text-yellow-200 "
+                                : "text-white"
+                        } text-[18px] px-6  font-Poppins  font-normal`}
+                    >
+                        {nav.name}
+                    </span>
+                </Link>
+            ))}
+        </div>
     );
 };

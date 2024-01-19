@@ -15,8 +15,9 @@ const HomePage: React.FC = () => {
                 description="ELearning is a platform for students to learn and get help from teacher"
             />
 
-            <Header open={open} setOpen={setOpen} activeItem={activeItem} />
+            <Header  activeItem={activeItem} />
             <Hero />
+
         </div>
     );
 };

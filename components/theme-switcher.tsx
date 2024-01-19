@@ -16,7 +16,7 @@ export const ThemeSwitcher = () => {
             {theme === "light" ? (
                 <BiMoon
                     className="cursor-pointer  "
-                    fill="black"
+                    
                     size={25}
                     onClick={() => setTheme("dark")}
                 />
@@ -31,3 +31,5 @@ export const ThemeSwitcher = () => {
         </div>
     );
 };
+
+
