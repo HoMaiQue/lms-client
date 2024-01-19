@@ -1,109 +1,127 @@
 "use client";
-
+import { Login } from "@/app/(home)/_component/login";
+import { useDimensions } from "@/hooks/useDimensions";
+import { motion, useCycle } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { HiOutlineUserCircle } from "react-icons/hi";
+import { useLockedBody, useToggle } from "usehooks-ts";
+import { MenuToggle } from "./menu-toggle";
+import { Modal } from "./modal";
 import { NavItems } from "./nav-item";
+import { Navigation } from "./navigation";
 import { ThemeSwitcher } from "./theme-switcher";
-import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+import { SignUp } from "@/app/(home)/_component/sign-up";
 interface HeaderProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
     activeItem: number;
 }
-export const Header: React.FC<HeaderProps> = ({
-    open,
-    setOpen,
-    activeItem,
-}) => {
-    const [active, setActive] = useState(false);
-    const [openSidebar, setOpenSidebar] = useState(false);
+const sidebar = {
+    open: (height = 1000) => ({
+        clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+        transition: {
+            type: "spring",
+            stiffness: 20,
+            restDelta: 2,
+        },
+    }),
+    closed: {
+        clipPath: "circle(20px at 258px 38px)",
+        transition: {
+            delay: 0.5,
+            type: "spring",
+            stiffness: 400,
+            damping: 40,
+        },
+    },
+};
+export const Header: React.FC<HeaderProps> = ({ activeItem }) => {
+    const [open, onToggle, setOpen] = useToggle();
 
-    // useEffect(() => {
-    //     const scrollEvent = () => {
-    //         if (window.scrollY > 80) {
-    //             setActive(true);
-    //         } else {
-    //             setActive(false);
-    //         }
-    //     };
-    //     if (typeof window !== "undefined") {
-    //         window.addEventListener("scroll", scrollEvent);
-    //     }
+    const containerRef = useRef(null);
 
-    //     return () => {
-    //         window.removeEventListener("scroll", scrollEvent);
-    //     };
-    // }, []);
-    const handleClose = (e: any) => {
-        if (e.target.id === "screen") {
-            setOpenSidebar(false);
-        }
+    const [isOpen, toggleOpen] = useCycle(false, true);
+    const { height } = useDimensions(containerRef);
+
+    const [route, setRoute] = useState("login");
+
+    useLockedBody(isOpen, "root");
+
+    const handleClickUser = () => {
+        toggleOpen();
+        setOpen(true);
     };
+
     return (
-        <div className="w-full relative">
-            <div
-                className={
-                    active
-                        ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 left-0 h-[80px] w-full border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 "
-                        : "w-full border-b dark:border-[#ffffff1c] h-[80px] z-[80] dark:shadow"
-                }
-            >
-                <div className="w-[95%] 800px:w-[92%] m-auto py-2 h-full ">
-                    <div className="w-full h-[80px] flex items-center justify-between p-3">
-                        <div className="">
-                            <Link
-                                className="text-[25px] font-Poppins font-500 text-black dark:text-white"
-                                href="/"
+        <div className=" bg-gradient-to-r dark:from-blue-400  dark:via-blue-300 dark:to-blue-200 from-orange-500 via-orange-400 to-orange-300 ">
+            <div className="container">
+                <div className="h-[80px] flex items-center justify-between ">
+                    <div className="">
+                        <Link
+                            className="text-[25px] font-Poppins font-500 text-white"
+                            href="/"
+                        >
+                            ELeaning
+                        </Link>
+                    </div>
+                    <div className="flex items-center ">
+                        <NavItems activeItem={activeItem} isMobile={false} />
+                        <ThemeSwitcher />
+                        {/* mobile */}
+
+                        <div className="md:hidden">
+                            {isOpen && (
+                                <div
+                                    onClick={() => toggleOpen()}
+                                    className="absolute inset-0 bg-opacity-10 bg-slate-900 z-20"
+                                ></div>
+                            )}
+                            <motion.nav
+                                initial={false}
+                                animate={isOpen ? "open" : "closed"}
+                                custom={height}
+                                ref={containerRef}
                             >
-                                ELeaning
-                            </Link>
-                        </div>
-                        <div className="flex items-center ">
-                            <NavItems
-                                activeItem={activeItem}
-                                isMobile={false}
-                            />
-                            <ThemeSwitcher />
-                            {/* mobile */}
-                            <div className="800px:hidden">
-                                <HiOutlineMenuAlt3
-                                    className="cursor-pointer dark:text-white text-black "
-                                    size={25}
-                                    onClick={() => setOpenSidebar(true)}
+                                <motion.div
+                                    variants={sidebar}
+                                    className=" absolute bottom-0 w-[300px] z-20  bg-gradient-to-r dark:from-purple dark:via-blue-100 dark:to-pink  top-0 right-0  from-orange-200 via-orange-100 to-pink-100"
                                 />
-                            </div>
-                            <HiOutlineUserCircle
-                                size={30}
-                                className="cursor-pointer hidden 800px:block dark:text-white text-black"
-                                onClick={() => setOpen(true)}
-                            />
+                                <Navigation
+                                    activeItem={activeItem}
+                                    onClick={handleClickUser}
+                                />
+                                <MenuToggle onToggle={() => toggleOpen()} />
+                            </motion.nav>
                         </div>
+
+                        <HiOutlineUserCircle
+                            size={30}
+                            className="cursor-pointer hidden md:block text-white "
+                            onClick={handleClickUser}
+                        />
                     </div>
                 </div>
-
-                {/* mobile sidebar */}
-                {openSidebar && (
-                    <div
-                        id="screen"
-                        className="fixed w-full h-screen top-0 left-0 z-[99999] dark:bg-[unset] bg-[#00000024]"
-                        onClick={handleClose}
-                    >
-                        <div className="fixed w-[60%] z-[9999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0">
-                            <NavItems activeItem={activeItem} isMobile={true} />
-                            <HiOutlineUserCircle
-                                size={30}
-                                className="cursor-pointer dark:text-white text-black ml-5 my-2"
-                                onClick={() => setOpen(true)}
-                            />
-                            <br />
-                            <br />
-                            <p className="text-base px-2 pl-5 text-black dark:text-white">
-                                Copyright 2023
-                            </p>
-                        </div>
-                    </div>
-                )}
             </div>
+
+            {open && route === "login" && (
+                <Modal
+                    open={open}
+                    onToggle={onToggle}
+                    title="Login With ELeaning"
+                    setRoute={setRoute}
+                >
+                    <Login setRoute={setRoute} />
+                </Modal>
+            )}
+            {open &&  route === "sign-up" && (
+                <Modal
+                    open={open}
+                    onToggle={onToggle}
+                    title="Login With ELeaning"
+                    setRoute={setRoute}
+                >
+                    <SignUp setRoute={setRoute} />
+                </Modal>
+            )}
         </div>
     );
 };
