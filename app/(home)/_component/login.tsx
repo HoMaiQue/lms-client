@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
+import { ROUTE } from "@/constants/route";
 type FormData = Pick<Schema, "email" | "password">;
 const loginSchema = schema.pick(["email", "password"]);
 export const Login = ({setRoute}: {setRoute: (route: string)=>void}) => {
@@ -65,13 +66,13 @@ export const Login = ({setRoute}: {setRoute: (route: string)=>void}) => {
                     Or join with{" "}
                 </h5>
                 <div className="flex items-center justify-center space-x-3 my-3">
-                    <FcGoogle size={30} className="cursor-pointer" />
-                    <AiFillGithub size={30} className="cursor-pointer" />
+                    <FcGoogle size={35} className="cursor-pointer" />
+                    <AiFillGithub size={35} className="cursor-pointer" />
                 </div>
-                <h5 className="text-center pt-4 font-Poppins text-sm">
+                <h5 className="text-center  font-Poppins text-sm">
                     Not have any account ?{" "}
                     <span
-                        onClick={() => setRoute("sign-up")}
+                        onClick={() => setRoute(ROUTE.signUp)}
                         className="cursor-pointer dark:text-orange-100 text-blue-200"
                     >
                         Sign up
