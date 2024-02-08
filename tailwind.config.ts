@@ -26,7 +26,7 @@ const config: Config = {
                 xs: "400px",
             },
             columns: {
-                "10xl": "1500px"
+                "10xl": "1500px",
             },
             colors: {
                 blue: {
@@ -45,6 +45,7 @@ const config: Config = {
                     400: "#F05941",
                     500: "#BE3144",
                 },
+                red: { 100: "#FE0000" },
             },
         },
     },

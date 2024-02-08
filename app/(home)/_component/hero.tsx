@@ -17,7 +17,7 @@ export const Hero = () => {
 
             <div className="flex-1 flex items-center lg:items-start px-15  lg:text-left   flex-col  lg:mt-0  mt-[50px] ">
                 <h2 className="text-white capitalize   text-[30px] w-full  lg:text-[50px] font-bold font-Josefin py-2 lg:leading-[60px] lg:text-left text-center">
-                    Improve your online learning experience better instantly
+                Enhance Your Online Learning Experience Immediately
                 </h2>
 
                 <p className="text-white font-Josefin font-semibold text-[18px] lg:text-left text-center ">

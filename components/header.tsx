@@ -12,6 +12,8 @@ import { NavItems } from "./nav-item";
 import { Navigation } from "./navigation";
 import { ThemeSwitcher } from "./theme-switcher";
 import { SignUp } from "@/app/(home)/_component/sign-up";
+import { Verification } from "@/app/(home)/_component/verification";
+import { ROUTE } from "@/constants/route";
 interface HeaderProps {
     activeItem: number;
 }
@@ -42,12 +44,14 @@ export const Header: React.FC<HeaderProps> = ({ activeItem }) => {
     const [isOpen, toggleOpen] = useCycle(false, true);
     const { height } = useDimensions(containerRef);
 
-    const [route, setRoute] = useState("login");
+    const [route, setRoute] = useState<string>(ROUTE.logIn);
 
     useLockedBody(isOpen, "root");
 
     const handleClickUser = () => {
-        toggleOpen();
+        if (isOpen) {
+            toggleOpen();
+        }
         setOpen(true);
     };
 
@@ -102,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({ activeItem }) => {
                 </div>
             </div>
 
-            {open && route === "login" && (
+            {open && route === ROUTE.logIn && (
                 <Modal
                     open={open}
                     onToggle={onToggle}
@@ -112,14 +116,24 @@ export const Header: React.FC<HeaderProps> = ({ activeItem }) => {
                     <Login setRoute={setRoute} />
                 </Modal>
             )}
-            {open &&  route === "sign-up" && (
+            {open && route === ROUTE.signUp && (
                 <Modal
                     open={open}
                     onToggle={onToggle}
-                    title="Login With ELeaning"
+                    title="Join To ELeaning"
                     setRoute={setRoute}
                 >
                     <SignUp setRoute={setRoute} />
+                </Modal>
+            )}
+            {open && route === ROUTE.verification && (
+                <Modal
+                    open={open}
+                    onToggle={onToggle}
+                    title="Verify Your Account"
+                    setRoute={setRoute}
+                >
+                    <Verification setRoute={setRoute} />
                 </Modal>
             )}
         </div>

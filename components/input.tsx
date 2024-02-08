@@ -17,7 +17,7 @@ export default function Input({
     name,
     register,
     rules,
-    classNameInput = "p-3 w-full outline-none border border-gray-300 font-Poppins focus:border-gray-500 rounded-lg focus:shadow-sm text-slate-900 bg-white text-sm ",
+    classNameInput = "p-3 w-full outline-none  font-Poppins focus:border-gray-500 rounded-lg focus:shadow-sm text-slate-900 bg-white text-sm outline-none border-none",
     classNameError = "mt-1 text-red-600 min-h-[1.25rem] text-sm",
     classNameEye = "absolute top-1/2 -translate-y-[100%] right-[5px] h-5 w-5 cursor-pointer ",
     ...rest

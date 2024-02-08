@@ -1,7 +1,9 @@
+import Providers from "@/components/providers";
 import "./globals.css";
 
 import ThemeProvider from "@/components/theme-provider";
 import { Josefin_Sans, Poppins } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 const poppins = Poppins({
     subsets: ["latin"],
     weight: ["400", "500", "600", "700"],
@@ -26,13 +28,16 @@ export default function RootLayout({
                  from-orange-200 via-orange-100 to-pink-100
             `}
             >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                >
-                    {children}
-                </ThemeProvider>
+                <Providers>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                    >
+                        {children}
+                        <Toaster position="top-center" reverseOrder={false} />
+                    </ThemeProvider>
+                </Providers>
             </body>
         </html>
     );

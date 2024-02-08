@@ -36,6 +36,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             variants={variants}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
+            className="mb-5 list-none cursor-pointer "
         >
             <Link href={menuItem.url}>
                 <span
